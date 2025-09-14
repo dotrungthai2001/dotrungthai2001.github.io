@@ -10,7 +10,7 @@ repository: "dotrungthai2001/dotrungthai2001.github.io"
 author:
   avatar: "profile.png" # Make sure this file is in your /images/ folder
   name: "Trung-Thai DO"
-  bio: PhD student at the University of Toulouse, working on reconstruction methods for 3D photoacoustic imaging.
+  bio: "PhD student at the University of Toulouse, working on reconstruction methods for 3D photoacoustic imaging."
   location: "Toulouse, France & Singapore"
   email: "trungthai1771@gmail.com"
   googlescholar: "https://scholar.google.com/citations?user=_srBckcAAAAJ&hl=en" 
