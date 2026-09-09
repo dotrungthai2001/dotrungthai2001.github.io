@@ -3,8 +3,7 @@ layout: archive
 title: "Talks and presentations"
 permalink: /talks/
 author_profile: true
+intro: "Conference talks, posters and seminars."
 ---
 
-{% for post in site.talks reversed %}
-  {% include archive-single-talk.html %}
-{% endfor %}
+{% include entry-list.html items=site.talks %}

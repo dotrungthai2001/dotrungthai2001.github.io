@@ -1,0 +1,21 @@
+{% comment %}
+  Renders page.hobbies as a card list.
+
+  Front matter format:
+    hobbies:
+      - title: "Guitar"
+        icon: "fas fa-guitar"
+        text: "One paragraph, in your own voice."
+{% endcomment %}
+
+{% if page.hobbies %}
+<div class="card-grid card-grid--hobbies">
+  {% for hobby in page.hobbies %}
+  <article class="card">
+    {% if hobby.icon %}<i class="card__icon {{ hobby.icon }}" aria-hidden="true"></i>{% endif %}
+    <h3 class="card__title">{{ hobby.title }}</h3>
+    <p class="card__text">{{ hobby.text | markdownify | remove: "<p>" | remove: "</p>" }}</p>
+  </article>
+  {% endfor %}
+</div>
+{% endif %}

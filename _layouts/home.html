@@ -1,0 +1,162 @@
+---
+layout: default
+---
+
+{% include base_path %}
+
+<div id="main" role="main" class="home">
+
+  <!-- ===================== HERO ===================== -->
+  <section class="hero">
+    <div class="hero__text">
+      {% if page.hero.eyebrow %}<p class="hero__eyebrow">{{ page.hero.eyebrow }}</p>{% endif %}
+      <h1 class="hero__name">{{ page.hero.name | default: site.author.name }}</h1>
+      {% if page.hero.lede %}<p class="hero__lede">{{ page.hero.lede | markdownify | remove: "<p>" | remove: "</p>" }}</p>{% endif %}
+
+      {% if page.hero.affiliations %}
+      <ul class="hero__affiliations">
+        {% for aff in page.hero.affiliations %}
+          <li>
+            {% if aff.url %}<a href="{{ aff.url }}">{{ aff.name }}</a>{% else %}{{ aff.name }}{% endif %}
+            {% if aff.place %}<span class="hero__place">{{ aff.place }}</span>{% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+
+      {% if page.hero.actions %}
+      <p class="hero__actions">
+        {% for action in page.hero.actions %}
+          {% if action.url contains '://' %}{% assign action_url = action.url %}{% else %}{% assign action_url = action.url | prepend: base_path %}{% endif %}
+          <a class="btn-hero{% unless action.primary %} btn-hero--ghost{% endunless %}" href="{{ action_url }}">{{ action.title }}</a>
+        {% endfor %}
+      </p>
+      {% endif %}
+
+      <ul class="hero__links">
+        {% if site.author.email %}<li><a href="mailto:{{ site.author.email }}" title="Email"><i class="fas fa-envelope" aria-hidden="true"></i><span>Email</span></a></li>{% endif %}
+        {% if site.author.googlescholar %}<li><a href="{{ site.author.googlescholar }}" title="Google Scholar"><i class="fas fa-graduation-cap" aria-hidden="true"></i><span>Scholar</span></a></li>{% endif %}
+        {% if site.author.orcid %}<li><a href="{{ site.author.orcid }}" title="ORCID"><i class="fas fa-id-badge" aria-hidden="true"></i><span>ORCID</span></a></li>{% endif %}
+        {% if site.author.github %}<li><a href="https://github.com/{{ site.author.github }}" title="GitHub"><i class="fab fa-github" aria-hidden="true"></i><span>GitHub</span></a></li>{% endif %}
+        {% if site.author.linkedin %}<li><a href="https://linkedin.com/in/{{ site.author.linkedin }}" title="LinkedIn"><i class="fab fa-linkedin" aria-hidden="true"></i><span>LinkedIn</span></a></li>{% endif %}
+      </ul>
+    </div>
+
+    <div class="hero__portrait">
+      <img src="{{ site.author.avatar | prepend: '/images/' | prepend: base_path }}"
+           alt="Portrait of {{ site.author.name }}">
+    </div>
+  </section>
+
+  <!-- ===================== RESEARCH ===================== -->
+  {% if page.research %}
+  <section class="home-section" id="research">
+    <div class="home-section__head">
+      <h2>{{ page.research.heading | default: "Research" }}</h2>
+      {% if page.research.intro %}<p class="home-section__intro">{{ page.research.intro | markdownify | remove: "<p>" | remove: "</p>" }}</p>{% endif %}
+    </div>
+
+    {% if page.research.figure %}
+    <figure class="research-figure">
+      <img src="{{ page.research.figure | prepend: '/images/' | prepend: base_path }}" alt="{{ page.research.figure_caption | default: 'Research figure' | escape }}">
+      {% if page.research.figure_caption %}<figcaption>{{ page.research.figure_caption }}</figcaption>{% endif %}
+    </figure>
+    {% endif %}
+
+    {% if page.research.themes %}
+    <div class="card-grid card-grid--themes">
+      {% for theme in page.research.themes %}
+      <article class="card">
+        {% if theme.icon %}<i class="card__icon {{ theme.icon }}" aria-hidden="true"></i>{% endif %}
+        <h3 class="card__title">{{ theme.title }}</h3>
+        <p class="card__text">{{ theme.text }}</p>
+      </article>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </section>
+  {% endif %}
+
+  <!-- ===================== SELECTED WORK ===================== -->
+  <section class="home-section" id="work">
+    <div class="home-section__head">
+      <h2>Selected work</h2>
+      <a class="home-section__more" href="{{ base_path }}/publications/">All publications <span aria-hidden="true">&rarr;</span></a>
+    </div>
+
+    {% assign pub_titles = site.publications | map: 'title' %}
+
+    <ul class="work-list">
+      {% assign recent_pubs = site.publications | sort: 'date' | reverse %}
+      {% for post in recent_pubs limit: 4 %}
+      <li class="work-list__item">
+        <span class="work-list__tag work-list__tag--pub">Paper</span>
+        <div class="work-list__body">
+          <a class="work-list__title" href="{{ base_path }}{{ post.url }}">{{ post.title }}</a>
+          <p class="work-list__meta">{{ post.venue }}{% if post.date %} &middot; {{ post.date | date: "%Y" }}{% endif %}</p>
+          {% assign related = site.talks | where: 'title', post.title | sort: 'date' | reverse %}
+          {% if related.size > 0 %}
+          <ul class="work-list__related">
+            {% for talk in related %}
+            <li><a href="{{ base_path }}{{ talk.url }}">{% if talk.type contains 'Poster' %}Poster{% else %}Talk{% endif %}</a> &middot; {{ talk.location | default: talk.venue }}{% if talk.date %}, {{ talk.date | date: "%b %Y" }}{% endif %}</li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+        </div>
+      </li>
+      {% endfor %}
+
+      {% assign recent_talks = site.talks | sort: 'date' | reverse %}
+      {% for post in recent_talks limit: 4 %}
+        {% unless pub_titles contains post.title %}
+        <li class="work-list__item">
+          <span class="work-list__tag">{% if post.type contains 'Poster' %}Poster{% else %}Talk{% endif %}</span>
+          <div class="work-list__body">
+            <a class="work-list__title" href="{{ base_path }}{{ post.url }}">{{ post.title }}</a>
+            <p class="work-list__meta">{{ post.venue }}{% if post.location %} &middot; {{ post.location }}{% endif %}{% if post.date %} &middot; {{ post.date | date: "%b %Y" }}{% endif %}</p>
+          </div>
+        </li>
+        {% endunless %}
+      {% endfor %}
+    </ul>
+  </section>
+
+  <!-- ===================== NEWS + BEYOND ===================== -->
+  <section class="home-split">
+    {% if page.news %}
+    <div class="home-section" id="news">
+      <div class="home-section__head"><h2>News</h2></div>
+      <ol class="news-list">
+        {% for item in page.news %}
+        <li class="news-list__item">
+          <span class="news-list__date">{{ item.date }}</span>
+          <span class="news-list__text">{{ item.text | markdownify | remove: "<p>" | remove: "</p>" }}</span>
+        </li>
+        {% endfor %}
+      </ol>
+    </div>
+    {% endif %}
+
+    {% if page.beyond %}
+    <div class="home-section" id="beyond">
+      <div class="home-section__head"><h2>{{ page.beyond.heading | default: "Beyond research" }}</h2></div>
+      <a class="beyond-card" href="{{ page.beyond.url | prepend: base_path }}">
+        <p class="beyond-card__text">{{ page.beyond.text }}</p>
+        <ul class="beyond-card__tags">
+          {% for tag in page.beyond.tags %}<li><i class="{{ tag.icon }}" aria-hidden="true"></i> {{ tag.label }}</li>{% endfor %}
+        </ul>
+        <span class="beyond-card__more">{{ page.beyond.cta | default: "More about that" }} <span aria-hidden="true">&rarr;</span></span>
+      </a>
+    </div>
+    {% endif %}
+  </section>
+
+  <!-- ===================== FREE PROSE (markdown body) ===================== -->
+  {% assign body = content | strip %}
+  {% if body != "" %}
+  <section class="home-section page__content" itemprop="text">
+    {{ content }}
+  </section>
+  {% endif %}
+
+</div>

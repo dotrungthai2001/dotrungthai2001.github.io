@@ -1,7 +1,7 @@
 ---
-title: "36h Teaching Assistant: Optimisation"
+title: "Optimisation"
 collection: teaching
-type: "Graduate Course (M1)"
+type: "Teaching assistant, M1 graduate course (24h TD, 12h TP)"
 permalink: /teaching/2025-optimisation
 venue: "Université Toulouse III - Paul Sabatier, Department of Mathematics"
 date: 2025-09-01

@@ -1,0 +1,18 @@
+{% include base_path %}
+{% comment %} Compact one-line entry for the CV page. Expects `post`. {% endcomment %}
+
+<li class="cv-entry">
+  <span class="cv-entry__year">{{ post.date | date: "%Y" }}</span>
+  <span class="cv-entry__body">
+    <a class="cv-entry__title" href="{{ base_path }}{{ post.url }}">{{ post.title }}</a>
+    <span class="cv-entry__meta">
+      {% if post.collection == 'teaching' %}
+        {{ post.type }} &middot; {{ post.venue }}
+      {% elsif post.collection == 'talks' %}
+        {{ post.type }} &middot; {{ post.venue }}{% if post.location %} &middot; {{ post.location }}{% endif %}
+      {% else %}
+        {{ post.venue }}
+      {% endif %}
+    </span>
+  </span>
+</li>

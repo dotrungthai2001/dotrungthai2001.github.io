@@ -1,0 +1,26 @@
+{% include base_path %}
+{% comment %}
+  Renders page.photos as a responsive grid. Renders nothing when the list is
+  empty, so the page stays clean until images are added.
+
+  Front matter format:
+    photos:
+      - file: beyond/singapore-skyline.jpg   # relative to /images/
+        alt: "Marina Bay at dusk"
+        caption: "Singapore, 2025"           # optional
+        span: wide                           # optional: wide | tall
+{% endcomment %}
+
+{% if page.photos and page.photos.size > 0 %}
+<div class="photo-grid">
+  {% for photo in page.photos %}
+    {% if photo.file contains '://' %}{% assign src = photo.file %}{% else %}{% assign src = photo.file | prepend: '/images/' | prepend: base_path %}{% endif %}
+    <figure class="photo-grid__item{% if photo.span %} photo-grid__item--{{ photo.span }}{% endif %}">
+      <a href="{{ src }}">
+        <img src="{{ src }}" alt="{{ photo.alt | default: '' | escape }}" loading="lazy">
+      </a>
+      {% if photo.caption %}<figcaption>{{ photo.caption }}</figcaption>{% endif %}
+    </figure>
+  {% endfor %}
+</div>
+{% endif %}

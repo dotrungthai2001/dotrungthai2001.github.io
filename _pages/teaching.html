@@ -3,10 +3,7 @@ layout: archive
 title: "Teaching"
 permalink: /teaching/
 author_profile: true
+intro: "Tutorials and lab sessions at Université Toulouse III — Paul Sabatier, Department of Mathematics."
 ---
 
-{% include base_path %}
-
-{% for post in site.teaching reversed %}
-  {% include archive-single.html %}
-{% endfor %}
+{% include entry-list.html items=site.teaching %}

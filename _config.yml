@@ -1,6 +1,7 @@
 # Basic Site Settings
 locale: "en-US"
 title: "Trung-Thai DO / PhD Student"
+masthead_title: "Trung-Thai Do"
 name: "Trung-Thai DO"
 description: "PhD Student at the University of Toulouse, focusing on photoacoustic imaging, image processing, inverse problems, and deep learning."
 url: "https://dotrungthai2001.github.io"
@@ -14,9 +15,9 @@ author:
   location: "Toulouse, France & Singapore"
   email: "trungthai1771@gmail.com"
   googlescholar: "https://scholar.google.com/citations?user=_srBckcAAAAJ&hl=en" 
+  linkedin: "trung-thai-do" # Your LinkedIn username/slug
   orcid: "https://orcid.org/0009-0004-0528-0504"
   github: "dotrungthai2001"
-  linkedin: "trung-thai-do" # Your LinkedIn username/slug
 
 # Reading Files
 include:
@@ -39,6 +40,8 @@ exclude:
   - "*.aux"
   - "*.fls"
   - "*.out"
+  - "*.fdb_latexmk"
+  - "*.synctex.gz"
 
 # Conversion and Markdown Processing
 markdown: kramdown

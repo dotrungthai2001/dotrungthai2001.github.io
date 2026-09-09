@@ -32,7 +32,8 @@
       "Bash(./scripts/build_cv.sh)",
       "Bash(latexmk -C)",
       "Bash(latexmk -gg -pdf -interaction=nonstopmode CV_TrungThaiDo.tex)",
-      "Bash(latexmk -c)"
+      "Bash(latexmk -c)",
+      "Bash(pdftoppm -png -r 60 CV_TrungThaiDo.pdf page)"
     ],
     "additionalDirectories": [
       "/home/thai/Documents/Thesis/dotrungthai2001.github.io",

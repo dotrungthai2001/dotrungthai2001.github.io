@@ -1,7 +1,7 @@
 ---
-title: "30h Teaching Assistant: Fourier Analysis and Signal Theory"
+title: "Fourier Analysis and Signal Theory"
 collection: teaching
-type: "Undergraduate Course (L3)"
+type: "Teaching assistant, L3 undergraduate course (30h TD)"
 permalink: /teaching/2024-fourier-analysis
 venue: "Université Toulouse III - Paul Sabatier, Department of Mathematics"
 date: 2024-09-01

@@ -1,0 +1,16 @@
+{% comment %}
+  Renders a collection grouped by year, newest first.
+  Call with: {% include entry-list.html items=site.publications %}
+{% endcomment %}
+
+{% assign sorted = include.items | sort: 'date' | reverse %}
+{% assign by_year = sorted | group_by_exp: "item", "item.date | date: '%Y'" %}
+
+{% for year in by_year %}
+<section class="entry-year">
+  <h2 class="entry-year__label">{{ year.name }}</h2>
+  <ul class="entry-list">
+    {% for post in year.items %}{% include entry.html %}{% endfor %}
+  </ul>
+</section>
+{% endfor %}

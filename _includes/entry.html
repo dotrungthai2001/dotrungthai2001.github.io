@@ -1,0 +1,49 @@
+{% include base_path %}
+{% comment %}
+  One item in a collection listing (publications / talks / teaching).
+  Expects `post` to be set by the calling loop.
+{% endcomment %}
+
+{% assign tag = "" %}
+{% if post.collection == 'publications' %}
+  {% assign tag = "Paper" %}
+{% elsif post.collection == 'talks' %}
+  {% if post.type contains 'Poster' %}{% assign tag = "Poster" %}{% else %}{% assign tag = "Talk" %}{% endif %}
+{% elsif post.collection == 'teaching' %}
+  {% if post.type contains 'L3' %}{% assign tag = "L3" %}
+  {% elsif post.type contains 'L2' %}{% assign tag = "L2" %}
+  {% elsif post.type contains 'L1' %}{% assign tag = "L1" %}
+  {% elsif post.type contains 'M2' %}{% assign tag = "M2" %}
+  {% elsif post.type contains 'M1' %}{% assign tag = "M1" %}
+  {% else %}{% assign tag = "Course" %}{% endif %}
+{% endif %}
+
+<li class="entry">
+  <span class="entry__tag{% if post.collection == 'publications' %} entry__tag--pub{% endif %}">{{ tag }}</span>
+
+  <div class="entry__body">
+    <h3 class="entry__title"><a href="{{ base_path }}{{ post.url }}">{{ post.title }}</a></h3>
+
+    <p class="entry__meta">
+      {% if post.collection == 'teaching' %}
+        {{ post.type }} &middot; {{ post.venue }}{% if post.location %} &middot; {{ post.location }}{% endif %}
+      {% elsif post.collection == 'talks' %}
+        {{ post.venue }}{% if post.location %} &middot; {{ post.location }}{% endif %}{% if post.date %} &middot; {{ post.date | date: "%d %b %Y" }}{% endif %}
+      {% else %}
+        {{ post.venue }}{% if post.date %} &middot; {{ post.date | date: "%Y" }}{% endif %}
+      {% endif %}
+    </p>
+
+    {% if post.excerpt %}
+      <p class="entry__excerpt">{{ post.excerpt | markdownify | strip_html | strip_newlines | truncatewords: 34 }}</p>
+    {% endif %}
+
+    {% if post.paperurl or post.slidesurl or post.bibtexurl %}
+    <p class="entry__links">
+      {% if post.paperurl %}<a href="{{ post.paperurl }}"><i class="fas fa-file-pdf" aria-hidden="true"></i> Paper</a>{% endif %}
+      {% if post.slidesurl %}<a href="{{ post.slidesurl }}"><i class="fas fa-display" aria-hidden="true"></i> Slides</a>{% endif %}
+      {% if post.bibtexurl %}<a href="{{ post.bibtexurl }}"><i class="fas fa-quote-right" aria-hidden="true"></i> BibTeX</a>{% endif %}
+    </p>
+    {% endif %}
+  </div>
+</li>
